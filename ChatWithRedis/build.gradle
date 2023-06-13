@@ -19,17 +19,28 @@ repositories {
 }
 
 dependencies {
-	//implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	//implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	//implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
-	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	//runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+	// lombok
+	annotationProcessor 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
+	
+	// redis
+	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	
+	// rabbitmq
+	//implementation 'org.springframework.boot:spring-boot-starter-amqp'
 	//testImplementation 'org.springframework.amqp:spring-rabbit-test'
+	
+	// MySQL
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	
+	// Swagger UI
+	implementation "io.springfox:springfox-boot-starter:3.0.0"
 }
 
 tasks.named('test') {

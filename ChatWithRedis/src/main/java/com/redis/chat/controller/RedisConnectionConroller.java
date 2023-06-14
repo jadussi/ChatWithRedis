@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -19,9 +20,9 @@ public class RedisConnectionConroller {
 	
 	@ApiOperation(value = "레디스 연결 테스트")
 	@RequestMapping(value = "test", method = RequestMethod.GET)
-	public String getConnection() {
+	public String getConnection(@ApiParam(value = "String 자료구조 파라메터") String param) {
 		
-		redisTemplate.opsForValue().append("testConnection", "테스트 커넥션 입니다");
+		redisTemplate.opsForValue().append("testConnection", param);
 		
 		return (String)redisTemplate.opsForValue().get("testConnection");
 	}

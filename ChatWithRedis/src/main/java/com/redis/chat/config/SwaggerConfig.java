@@ -18,7 +18,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30) // open api spec 3.0
         		.apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.redis.chat.controller"))	// basic-error-controller 표시 안하기 위해 controller 패키지 경로 지정
                 .paths(PathSelectors.any())
                 .build();
     }

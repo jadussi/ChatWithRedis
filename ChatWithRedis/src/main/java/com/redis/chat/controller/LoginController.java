@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.redis.chat.dto.LoginDTO;
 import com.redis.chat.service.LoginService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@Api(tags = "회원관련 컨트롤러 클래스")
 public class LoginController {
 	
 	// 회원관련 서비스 객체

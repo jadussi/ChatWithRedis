@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.redis.chat.dao.LoginDAO">
+<mapper namespace="com.redis.chat.dao.UserDAO">
 	<insert id="joinService">
 		INSERT INTO USER
 		(
@@ -18,4 +18,11 @@
 			#{userNm}
 		)
 	</insert>
+	
+	<select id="loginService" resultType="String">
+	SELECT USER_NM
+	  FROM USER
+	 WHERE USER_ID = #{userId}
+	   AND USER_PW = #{userPw}
+	</select>
 </mapper>

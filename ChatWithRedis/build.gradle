@@ -31,8 +31,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	
 	// rabbitmq
-	//implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	//testImplementation 'org.springframework.amqp:spring-rabbit-test'
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	testImplementation 'org.springframework.amqp:spring-rabbit-test'
 	
 	// MySQL
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'

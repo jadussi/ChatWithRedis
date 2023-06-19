@@ -2,6 +2,7 @@ package com.redis.chat.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -30,5 +31,11 @@ public class SwaggerConfig {
                 .version("0.1")
                 .build();
     }
+	
+	@Bean
+	public InternalResourceViewResolver defaultViewResolver() {
+	    return new InternalResourceViewResolver();
+	    // 리액트 연동 후 Swagger 문서 리다이렉트시 redirect:/swagger-ui/index.html라는 서블릿이 존재하지 않아 추가
+	}
 
 }

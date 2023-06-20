@@ -29,3 +29,9 @@
 
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/08ec5e2d-42c4-415e-9567-ea1376cbbec7)
 
+
+#### 23.06.20 채팅방 전체 목록 조회 서비스, 채팅방 컨트롤러 클래스 - 채팅방 목록 조회 서비스
+[결과]
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/7f7038aa-1c5b-4d46-a264-d4bc9da2e784)
+
+

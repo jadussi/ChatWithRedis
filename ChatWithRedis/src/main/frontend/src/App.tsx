@@ -1,5 +1,6 @@
 import './App.css';
 import Athentication from './views/athentication';
+import MaxinLayout from './views/athentication/layouts/mainLayout';
 
 function App() {
   /*
@@ -18,7 +19,7 @@ function App() {
   스프링 부트 연동 테스트
 */
   return (
-    <Athentication />
+    <MaxinLayout />
   );
 }
 

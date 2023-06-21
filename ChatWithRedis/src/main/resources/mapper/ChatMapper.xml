@@ -13,4 +13,23 @@
 				  END AS ROOM_TYPE_NM	/*채팅방 타입 구분명*/
 	FROM CHAT_ROOM	/*채팅방목록*/
 	</select>
+	
+	<insert id="makeChatRoom">
+	/*채팅방개설*/
+	INSERT INTO CHAT_ROOM
+	(
+		ROOM_ID,	/*채팅방 아이디*/
+	    ROOM_TYPE,	/*채팅방 타입구분 1: 개인톡 2: 단체톡*/
+	    ROOM_NAME	/*채팅방 명*/
+	)
+	VALUES 
+	(
+		(SELECT CONCAT('C_',LPAD((SUBSTR(MAX(C.ROOM_ID),3)+1),5,0))
+		FROM CHAT_ROOM C
+		),	/*채팅방아이디*/
+		#{roomType},
+		#{roomName}
+	)
+	
+	</insert>
 </mapper>

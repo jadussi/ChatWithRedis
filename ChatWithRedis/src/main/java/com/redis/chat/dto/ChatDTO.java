@@ -15,4 +15,6 @@ public class ChatDTO {
 	private String roomName;
 	@ApiModelProperty(value = "채팅방 타입 구분명")
 	private String roomTypeNm;
+	@ApiModelProperty(value = "채팅방 타입 구분")
+	private String roomType;
 }

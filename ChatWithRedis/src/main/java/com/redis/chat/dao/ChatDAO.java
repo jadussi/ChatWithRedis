@@ -11,4 +11,7 @@ public interface ChatDAO {
 	
 	// 채팅방 목록 조회
 	ArrayList<ChatDTO> selectChatRoomList();
+	
+	// 채팅방 개설
+	void makeChatRoom(ChatDTO chatDTO) throws Exception;
 }

@@ -82,4 +82,18 @@
 [결과]
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/7f7038aa-1c5b-4d46-a264-d4bc9da2e784)
 
+#### 23.06.21 채팅방 개설 서비스 , 채팅방 컨트롤러 클래스 - 채팅방 개설 서비스
+[테스트]
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/7db62780-560a-4ebd-a02a-abc6bb6b21d2)
+
+[결과]
+1. Swagger UI 테스트 결과
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/5b643105-d9b7-4e4a-9c68-c0da3d358d4c)
+2. DB 저장 결과
+   
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/5d9e280c-b370-4fbf-ad3d-810be9ba412f)
+
+
+
+
 

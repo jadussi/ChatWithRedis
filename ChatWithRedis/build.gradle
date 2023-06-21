@@ -39,6 +39,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	
+	// 쿼리 로그 관련 라이브러리
+	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+	
+	
 	// Swagger UI
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
 }

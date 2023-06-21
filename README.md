@@ -16,14 +16,18 @@
 1. A 사용자가 채팅을 보내면 SORTED SET에 저장됨
 2. B 사용자는 A사용자와 같이하는 채팅방의 마지막 읽은위치를 HASH에서 채팅방명_사용자 KEY로 VALUE 를 조회
 3. B 사용자가 조회한 HASH 의 VALUE는 SORTED SET의 MEMBER와 동일하므로 SORTED SET에 저장된 MEMBER 의 index를 조회 
-(redisTemplate.opsForZset().reverseRank(”SORTED SET 자료구조명” , “HASH에서 조회한 데이터”)
-4. 조회한 SORTED SET의 MEMBER index부터 정해진 갯수만큼 조회하여 출력
+
+   redisTemplate.opsForZset().rank(”SORTED SET 자료구조명” , “HASH에서 조회한 데이터”)
+5. HASH로 구한 index를 기준으로 조회를 시작할 index, 조회를 끝낼 index 구하기
+6. 조회한 SORTED SET의 MEMBER index부터 정해진 갯수만큼 조회하여 출력
+
+    redisTemplate.opsForZSet().rangeWithScores(”SORTED SET 자료구조명”, “4에서 구한 시작 index”,”4에서 구한 끝나는 index”)
 
 <aside>
-💡 HASH와 SORTED SET 을 같이 쓰는이유
+   💡 HASH와 SORTED SET 을 같이 쓰는이유
   
-  SORTED SET의 SCORE에 저장 된 채팅을 보낸사람의 보낸 시각을 기준으로 조회 할 수있지만 
-  HASH에 저장된 VALUE 를 가지고 SORTED SET의 MEMBER 를 조회해서 가지고 오는 것이 시간복잡도가 좋기 때문
+    SORTED SET의 SCORE에 저장 된 채팅을 보낸사람의 보낸 시각을 기준으로 조회 할 수있지만 
+    HASH에 저장된 VALUE 를 가지고 SORTED SET의 MEMBER 를 조회해서 가지고 오는 것이 시간복잡도가 좋기 때문
 
 </aside>
 

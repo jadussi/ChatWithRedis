@@ -73,6 +73,10 @@ public class ChatServiceImpl implements ChatService {
 		try {
 			// 채팅방 참여하기 전 참여하고자 하는 채팅방 채팅참여여부 다시 확인 후 채팅방 참여자 수 변경 및 채팅방 인원 테이블 insert
 			ChatDTO checkDTO =  chatDAO.selectChatRoomStatus(chatDTO);	// 참여하고자 하는 채팅방 참여여부 상태 확인
+			
+			if(checkDTO.getPartiYn().equals("N")) {	// 채팅방 참여 가능여부가 N일때 참여 불가
+				throw new Exception("참여 할 수 없는 채팅방 입니다.");
+			}
 			if(checkDTO.getPartiYn().equals("Y") &&
 					(Integer.parseInt(checkDTO.getPrePartiNum())+1 == Integer.parseInt(checkDTO.getPartiNum()))) {
 				checkDTO.setPartiYn("N");
@@ -89,7 +93,7 @@ public class ChatServiceImpl implements ChatService {
 			}
 		} catch (Exception e) {
 			transactionManager.rollback(status);
-			throw new Exception("채팅방 참여에 실패하였습니다");
+			throw new Exception(null == e.getMessage() ? "채팅방 참여에 실패하였습니다." : e.getMessage());
 		}
 	}
 

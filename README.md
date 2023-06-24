@@ -94,6 +94,28 @@
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/5d9e280c-b370-4fbf-ad3d-810be9ba412f)
 
 
+#### 23.06.24 기채팅방 다른 사용자 참여 서비스, 채팅방 컨트롤러 클래스 - 채팅방 참여 서비스
+[테스트]
+1. 테스트 성공 조건
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/e5aef640-b96c-412e-8df8-29d700bc6559)
+
+[결과]
+1-1. Swagger UI 테스트 결과 (성공 조건)
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/c4a24bfd-c3cc-4228-9a21-7a3a30c978fc)
+1-2. Swagger UI 테스트 결과 (실패 조건 => DB 변동 없음)
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/6a0fe2f7-f933-49cf-a0ee-7e9360f87ba7)
+
+
+
+
+2-1. DB 저장 결과
+2-1-1. 채팅방 정보 참여자 수 변경
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/5f082732-ba1a-4215-9f6c-5eb3ca951569)
+2-1-2. 채팅방 참여자 수 변경
+
+
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/05b718ec-9cda-4e69-96b5-873695b0404b)
+
 
 
 

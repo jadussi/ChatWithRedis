@@ -14,6 +14,13 @@
 	FROM CHAT_ROOM	/*채팅방목록*/
 	</select>
 	
+	<select id="makeRoomId" resultType="String">
+		/*채팅방 개설 및 채팅방 사용자 추가에 사용하기 위해 사용하는 roomId*/
+		SELECT CONCAT('C_',LPAD((SUBSTR(MAX(ROOM_ID),3)+1),5,0))
+		FROM CHAT_ROOM 
+		
+	</select>
+	
 	<insert id="makeChatRoom">
 	/*채팅방개설*/
 	INSERT INTO CHAT_ROOM
@@ -24,12 +31,23 @@
 	)
 	VALUES 
 	(
-		(SELECT CONCAT('C_',LPAD((SUBSTR(MAX(C.ROOM_ID),3)+1),5,0))
-		FROM CHAT_ROOM C
-		),	/*채팅방아이디*/
+		#{roomId},
 		#{roomType},
 		#{roomName}
 	)
+	</insert>
 	
+	<insert id="insertRommParti">
+	/*채팅방 참여자 추가*/
+	INSERT INTO ROOM_PARTI
+	(
+		ROOM_ID, /*채팅방 아이디*/
+		USER_ID	 /*채팅방 참여자 아이디*/
+	)
+	VALUES 
+	(
+		#{roomId},
+		#{userId}
+	)
 	</insert>
 </mapper>

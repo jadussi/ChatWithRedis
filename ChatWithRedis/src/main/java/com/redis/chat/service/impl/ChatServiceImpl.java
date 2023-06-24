@@ -45,10 +45,17 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public void makeChatRoom(ChatDTO chatDTO) throws Exception {
 		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());	// 트랜잭션 성공
-		
+		int excnt = 0;	//insert 건수
 		try {
-			chatDAO.makeChatRoom(chatDTO);
-			transactionManager.commit(status);	// 채팅방 개설 시 commit
+			String roomId = chatDAO.makeRoomId();	// 채팅방 아이디를 만들어서 채팅방 개설 을 위해 사용(2개의 테이블에서 사용)
+			chatDTO.setRoomId(roomId);
+			excnt += chatDAO.makeChatRoom(chatDTO);
+			excnt += chatDAO.insertRommParti(chatDTO);
+			if(excnt >= 2) {
+				transactionManager.commit(status);	// 채팅방 개설 시 commit
+			} else {
+				throw new Exception();	// 두개의 테이블에 insert 하지만 두개가 전부 다 변하지 않았을 때 예외 상황이 발생 한것으로 간주
+			}
 		} catch (Exception e) {
 			transactionManager.rollback(status);
 			throw new Exception("채팅방 개설에 실패하였습니다");	// 채팅방 개설 실패 시 rollback

@@ -20,4 +20,11 @@ public interface ChatDAO {
 	
 	// 채팅방 참여자 추가
 	int insertRommParti(ChatDTO chatDTO) throws Exception;
+	
+	// 채팅방 참여가능 여부 확인
+	ChatDTO selectChatRoomStatus(ChatDTO chatDTO);
+	
+	// 채팅방 참여자 수 변경
+	int updateChatRoomParti(ChatDTO chatDTO) throws Exception;
+	
 }

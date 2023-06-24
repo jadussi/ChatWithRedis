@@ -10,4 +10,7 @@ public interface ChatService {
 	
 	// 채팅방 개설
 	void makeChatRoom(ChatDTO chatDTO) throws Exception;
+	
+	// 채팅방 참여자 추가
+	void joinChatRoom(ChatDTO chatDTO) throws Exception;
 }

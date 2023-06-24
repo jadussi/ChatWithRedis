@@ -63,4 +63,34 @@ public class ChatServiceImpl implements ChatService {
 		
 	}
 
+	/**
+	 * 채팅방 참여 서비스
+	 */
+	@Override
+	public void joinChatRoom(ChatDTO chatDTO) throws Exception {
+		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+		int exCnt = 0;	// insert, update 건수
+		try {
+			// 채팅방 참여하기 전 참여하고자 하는 채팅방 채팅참여여부 다시 확인 후 채팅방 참여자 수 변경 및 채팅방 인원 테이블 insert
+			ChatDTO checkDTO =  chatDAO.selectChatRoomStatus(chatDTO);	// 참여하고자 하는 채팅방 참여여부 상태 확인
+			if(checkDTO.getPartiYn().equals("Y") &&
+					(Integer.parseInt(checkDTO.getPrePartiNum())+1 == Integer.parseInt(checkDTO.getPartiNum()))) {
+				checkDTO.setPartiYn("N");
+			}
+			checkDTO.setUserId(chatDTO.getUserId());	// 사용자 Id set
+			
+			exCnt += chatDAO.updateChatRoomParti(checkDTO);	// 채팅방 참여자 수 변경
+			exCnt += chatDAO.insertRommParti(checkDTO);		// 채팅방 참여자 추가
+			
+			if(exCnt >= 2) {
+				transactionManager.commit(status);	// 두 개의 테이블이 변경이 되었을때 commit
+			} else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			transactionManager.rollback(status);
+			throw new Exception("채팅방 참여에 실패하였습니다");
+		}
+	}
+
 }

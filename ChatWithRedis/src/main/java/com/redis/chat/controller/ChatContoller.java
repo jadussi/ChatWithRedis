@@ -43,5 +43,17 @@ public class ChatContoller {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
+	
+	@ApiOperation(value = "채팅방 참여 서비스")
+	@PostMapping(value = "/room/parti")
+	public @ResponseBody ResponseEntity<String> joinChatRoom(@RequestBody ChatDTO chatDTO) {
+		try {
+			chatService.joinChatRoom(chatDTO);
+			// TODO  Redis, Rabbit MQ 구현 
+			return ResponseEntity.status(HttpStatus.OK).body("채팅방 참여에 성공하였습니다");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 
 }

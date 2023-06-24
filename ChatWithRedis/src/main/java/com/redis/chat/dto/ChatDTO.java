@@ -19,4 +19,10 @@ public class ChatDTO {
 	private String roomType;
 	@ApiModelProperty(value = "채팅방 참여자 아이디")
 	private String userId;
+	@ApiModelProperty(value = "채팅방 참여자 수")
+	private String partiNum;
+	@ApiModelProperty(value = "현재 참여자 수")
+	private String prePartiNum;
+	@ApiModelProperty(value = "참여가능 여부")
+	private String partiYn;
 }

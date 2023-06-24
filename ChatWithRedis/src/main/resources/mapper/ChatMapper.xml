@@ -11,6 +11,8 @@
 		          THEN '개인톡'
 		          ELSE '단체'
 				  END AS ROOM_TYPE_NM	/*채팅방 타입 구분명*/
+		   , CONCAT("(",PRE_PARTI_NUM, "/",PARTI_NUM,")") PRE_PARTI_NUM	/*현재참여자*/
+		   , PARTI_YN	/*참여가능여부*/
 	FROM CHAT_ROOM	/*채팅방목록*/
 	</select>
 	
@@ -27,13 +29,24 @@
 	(
 		ROOM_ID,	/*채팅방 아이디*/
 	    ROOM_TYPE,	/*채팅방 타입구분 1: 개인톡 2: 단체톡*/
-	    ROOM_NAME	/*채팅방 명*/
+	    ROOM_NAME,	/*채팅방 명*/
+	    PARTI_NUM,	/*채팅방 참여자 수*/
+	    PRE_PARTI_NUM, 	/*현재 참여자 수*/
+	    PARTI_YN	/*참여가능 여부*/
 	)
 	VALUES 
 	(
 		#{roomId},
 		#{roomType},
-		#{roomName}
+		#{roomName},
+	<if test='roomType == "1"'>
+		2,	/*채팅방 타입구분이 1일때는 채팅방 참여자 수 는 두명*/
+	</if>
+	<if test='roomType == "2"'>
+		#{partiNum},	/*채팅방 타입구분이 2일때는 입력받은 참여자 수 */
+	</if>
+		"1",	/* 첫 개설 시에는 1*/
+		"Y"		/* 첫 개설 시에는 Y*/
 	)
 	</insert>
 	

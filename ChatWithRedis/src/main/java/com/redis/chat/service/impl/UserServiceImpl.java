@@ -1,7 +1,5 @@
 package com.redis.chat.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.redis.chat.dao.UserDAO;

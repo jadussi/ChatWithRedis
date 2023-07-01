@@ -20,37 +20,48 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "Ã¤ÆÃ¹æ ÄÁÆ®·Ñ·¯ Å¬·¡½º")
-@RequestMapping(value = "/chat" , produces = "application/json; charset=utf8")	// ÀÀ´ä½Ã ResponseEntity »ç¿ëÇÒ °æ¿ì utf-8 ¼³Á¤À» ÇØÁÖÁö ¾ÊÀ¸¸é ÇÑ±ÛÀÌ ±úÁö´Â Çö»ó ¹ß»ı
+@Api(tags = "ì±„íŒ…ë°© ì»¨íŠ¸ë¡¤ëŸ¬ í´ë˜ìŠ¤")
+@RequestMapping(value = "/chat", produces = "application/json; charset=utf8")	// ì‘ë‹µì‹œ ResponseEntity ì‚¬ìš©í•  ê²½ìš° utf-8 ì„¤ì •ì„ í•´ì£¼ì§€ ì•Šìœ¼ë©´ í•œê¸€ì´ ê¹¨ì§€ëŠ” í˜„ìƒ ë°œìƒ
 public class ChatContoller {
 	
-	private final ChatService chatService;	// Ã¤ÆÃ¹æ °ü·Ã ¼­ºñ½º °´Ã¼
+	private final ChatService chatService;	// ì±„íŒ…ë°© ê´€ë ¨ ì„œë¹„ìŠ¤ ê°ì²´
 	
-	@ApiOperation(value = "Ã¤ÆÃ¹æ ¸ñ·Ï Á¶È¸ ¼­ºñ½º")
+	@ApiOperation(value = "ì±„íŒ…ë°© ëª©ë¡ ì¡°íšŒ ì„œë¹„ìŠ¤")
 	@GetMapping("/list")
 	public ArrayList<ChatDTO> selectChatRoomList(){
 		return chatService.selectChatRoomList();
 		
 	}
 	
-	@ApiOperation(value = "Ã¤ÆÃ¹æ °³¼³ ¼­ºñ½º")
+	@ApiOperation(value = "ì°¸ì—¬ì¤‘ì¸ ì±„íŒ…ë°© ëª©ë¡ ì¡°íšŒ ì„œë¹„ìŠ¤")
+	@GetMapping("/list/{userId}")
+	public ResponseEntity<Object> selectUserChatRoomList(ChatDTO chatDTO) {
+		ArrayList<ChatDTO> rtn = chatService.selectUserChatRoomList(chatDTO);
+		if(null == rtn || rtn.size() == 0) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ì°¸ì—¬ì¤‘ì¸ ì±„íŒ…ë°©ì´ ì—†ìŠµë‹ˆë‹¤.");
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(rtn);
+		}
+	}
+	
+	@ApiOperation(value = "ì±„íŒ…ë°© ê°œì„¤ ì„œë¹„ìŠ¤")
 	@PostMapping(value = "/room")
 	public @ResponseBody ResponseEntity<String> makeChatRoom(@RequestBody ChatDTO chatDTO) {
 		try {
 			chatService.makeChatRoom(chatDTO);
-			return ResponseEntity.status(HttpStatus.OK).body("Ã¤ÆÃ¹æ °³¼³¿¡ ¼º°øÇÏ¿´½À´Ï´Ù");
+			return ResponseEntity.status(HttpStatus.OK).body("ì±„íŒ…ë°© ê°œì„¤ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	
-	@ApiOperation(value = "Ã¤ÆÃ¹æ Âü¿© ¼­ºñ½º")
+	@ApiOperation(value = "ì±„íŒ…ë°© ì°¸ì—¬ ì„œë¹„ìŠ¤")
 	@PostMapping(value = "/room/parti")
-	public @ResponseBody ResponseEntity<String> joinChatRoom(@RequestBody ChatDTO chatDTO) {
+	public @ResponseBody ResponseEntity<String> joinChatRoom(@RequestBody ChatDTO chatDTO, String userNm) {
+		// TODO Rabbit MQ êµ¬í˜„
 		try {
-			chatService.joinChatRoom(chatDTO);
-			// TODO  Redis, Rabbit MQ ±¸Çö 
-			return ResponseEntity.status(HttpStatus.OK).body("Ã¤ÆÃ¹æ Âü¿©¿¡ ¼º°øÇÏ¿´½À´Ï´Ù");
+			chatService.joinChatRoom(chatDTO, userNm);
+			return ResponseEntity.status(HttpStatus.OK).body("ì±„íŒ…ë°© ì°¸ì—¬ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}

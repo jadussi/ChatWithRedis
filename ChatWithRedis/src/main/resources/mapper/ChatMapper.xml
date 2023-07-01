@@ -16,6 +16,17 @@
 	FROM CHAT_ROOM	/*채팅방목록*/
 	</select>
 	
+	<select id="selectUserChatRoomList">
+	/*사용자 참여 채팅방 목록 조회*/
+	SELECT    A.ROOM_ID /*채팅방 아이디*/
+			, B.ROOM_NAME /*채팅방 명*/
+			, CONCAT(B.PRE_PARTI_NUM , '/', B.PARTI_NUM ) PRE_PARTI_NUM /*현재참여자 수*/
+	FROM ROOM_PARTI A	/*채팅 참여자*/
+	INNER JOIN CHAT_ROOM B	/*채팅방 목록*/
+	ON A.ROOM_ID = B.ROOM_ID
+	WHERE A.USER_ID = #{userId}
+	</select>
+	
 	<select id="makeRoomId" resultType="String">
 		/*채팅방 개설 및 채팅방 사용자 추가에 사용하기 위해 사용하는 roomId*/
 		SELECT CONCAT('C_',LPAD((SUBSTR(MAX(ROOM_ID),3)+1),5,0))

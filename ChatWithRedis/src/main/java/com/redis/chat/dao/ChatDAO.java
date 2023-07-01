@@ -12,6 +12,9 @@ public interface ChatDAO {
 	// 채팅방 목록 조회
 	ArrayList<ChatDTO> selectChatRoomList();
 	
+	// 참여중인 채팅방 목록 조회
+	ArrayList<ChatDTO> selectUserChatRoomList(ChatDTO chatDTO);
+	
 	// 채팅방 roomId 만들기
 	String makeRoomId();
 	

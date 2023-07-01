@@ -117,5 +117,28 @@
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/05b718ec-9cda-4e69-96b5-873695b0404b)
 
 
+#### 23.07.02 채팅방 참여 서비스 Redis 에 데이터 추가
+[테스트]
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/5375aa26-3d23-4b3f-97ac-bcf3e4e58223)
+
+[결과]
+1. Swagger UI 테스트 결과
+
+![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/ad3cad0f-f71d-4575-9648-dc9909fdc8f5)
+
+2. Redis 데이터 추가 결과
+   
+   2-1. HASH
+   
+   ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/d21b2a3d-0f6c-4e3a-be6d-1edc603c02d9)
+
+   2-2. SORTED SET
+   
+   ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/854adc86-9c63-4aee-b025-af0cea078552)
+
+   
+
+
+
 
 

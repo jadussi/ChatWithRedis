@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.redis.chat.dto.ChatDTO;
+import com.redis.chat.dto.MessageDTO;
 import com.redis.chat.service.ChatService;
 
 import io.swagger.annotations.Api;
@@ -58,7 +59,6 @@ public class ChatContoller {
 	@ApiOperation(value = "채팅방 참여 서비스")
 	@PostMapping(value = "/room/parti")
 	public @ResponseBody ResponseEntity<String> joinChatRoom(@RequestBody ChatDTO chatDTO, String userNm) {
-		// TODO Rabbit MQ 구현
 		try {
 			chatService.joinChatRoom(chatDTO, userNm);
 			return ResponseEntity.status(HttpStatus.OK).body("채팅방 참여에 성공하였습니다");
@@ -66,5 +66,15 @@ public class ChatContoller {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
-
+	
+	@ApiOperation(value = "채팅 메세지 전송 서비스")
+	@PostMapping(value = "/message")
+	public @ResponseBody ResponseEntity<String> sendChatMessage(@RequestBody MessageDTO messageDTO) {
+		try {
+			chatService.sendChatMessage(messageDTO);
+			return ResponseEntity.status(HttpStatus.OK).body("메세지 전송에 성공하였습니다");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 }

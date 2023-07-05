@@ -14,48 +14,30 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.rabbitmq.client.AMQP.Exchange;
+
 @EnableRabbit
 @Configuration
 public class RabbitConfig {
 	
-	// 개인톡 관련 전역변수 선언
-	private static final String PRIVATE_CHAT_QUEUE = "privateChat.queue";
-	private static final String PRIVATE_CHAT_EXCHAGE = "privateChat.exchage";
-	private static final String PRIVATE_CHAT_KEY = "privateChat.key.*";	// * 하나의 단어만 대체하는 와일드카드, # 여러개의 단어를 대체하는 와일드카드
+	// 톡 관련 전역변수 선언 (개인톡, 단톡 구분 필요 X)
+	private String CHAT_QUEUE = "chat.queue";
+	private String CHAT_EXCHANGE = "chat.exchange";
+	private String CHAT_KEY = "chat.key.*";
 	
-	@Bean	// 개인톡 큐 생성
-	Queue privateChatQueue() {
-		return new Queue(PRIVATE_CHAT_QUEUE);
+	@Bean	// 채팅방 큐 생성
+	public Queue chatQueue() {
+		return new Queue(CHAT_QUEUE);
 	}
 	
-	@Bean	// 개인톡 Direct 방식 Exchange 생성 
-	DirectExchange privateChatExchange () {
-		return new DirectExchange(PRIVATE_CHAT_EXCHAGE);
+	@Bean	// 채팅방 Topic 방식 Exchange 생성
+	public TopicExchange chatExchange() {
+		return new TopicExchange(CHAT_EXCHANGE);
 	}
 	
-	@Bean	// 개인톡 privateChat.key.* 라우팅 키를 사용하여 큐, exchange 바인딩 설정
-	Binding privateChatBinding(@Qualifier("privateChatQueue") Queue queue, @Qualifier("privateChatExchange") DirectExchange exchange) {
-		return BindingBuilder.bind(queue).to(exchange).with(PRIVATE_CHAT_KEY);
-	}
-	
-	// 단체톡 관련 전역번수 선언
-	private static final String PUBLIC_CHAT_QUEUE = "publicChat.queue";
-	private static final String PUBLIC_CHAT_EXCHAGE = "publicChat.exchage";
-	private static final String PUBLIC_CHAT_KEY = "puvlicChat.key.*";
-	
-	@Bean	// 단체톡 큐 생성
-	Queue publicChatQueue() {
-		return new Queue(PUBLIC_CHAT_QUEUE);
-	}
-	
-	@Bean	// 단체톡 topic 방식 exchange 생성
-	TopicExchange publicChatExchange() {
-		return new TopicExchange(PUBLIC_CHAT_EXCHAGE);
-	}
-	
-	@Bean	// 단체톡 publicChat.key.* 라우팅 키를 사용하여 큐, exchange 바인딩 설정
-	Binding publicChatBinding(@Qualifier("publicChatQueue") Queue queue, @Qualifier("publicChatExchange") TopicExchange topicExchange) {
-		return BindingBuilder.bind(queue).to(topicExchange).with(PUBLIC_CHAT_KEY);
+	@Bean	// Queue, exchange 바인딩
+	public Binding chatBinding(@Qualifier("chatQueue") Queue queue, @Qualifier("chatExchange") TopicExchange exchange) {
+		return BindingBuilder.bind(queue).to(exchange).with(CHAT_KEY);
 	}
 	
 	@Bean

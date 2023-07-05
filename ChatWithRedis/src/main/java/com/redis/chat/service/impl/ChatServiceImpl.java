@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -13,6 +14,7 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 
 import com.redis.chat.dao.ChatDAO;
 import com.redis.chat.dto.ChatDTO;
+import com.redis.chat.dto.MessageDTO;
 import com.redis.chat.dto.RedisChatDTO;
 import com.redis.chat.service.ChatService;
 
@@ -29,7 +31,9 @@ public class ChatServiceImpl implements ChatService {
 	private final ChatDAO chatDAO;	// 채팅방 관련 DAO 객체
 	
 	private final PlatformTransactionManager transactionManager;	// 트랜잭션 관리 객체
-	private final RedisTemplate<String, Object> redisTemplate;	// redisTemplate
+	private final RedisTemplate<String, Object> redisTemplate;		// redisTemplate
+	private final RabbitTemplate rabbitTemplate;					// rabbitTemplate
+	private String CHAT_EXCHANGE = "chat.exchange";
 	
 	SimpleDateFormat  milDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");	// 밀리세컨드까지 포함
 	
@@ -136,6 +140,7 @@ public class ChatServiceImpl implements ChatService {
 			
 			if(exCnt >= 2) {
 				transactionManager.commit(status);	// 두 개의 테이블이 변경이 되었을때 commit
+				rabbitTemplate.convertAndSend(CHAT_EXCHANGE, "chat.key."+sortedSetName, message);
 			} else {
 				throw new Exception();
 			}
@@ -145,5 +150,24 @@ public class ChatServiceImpl implements ChatService {
 		}
 	}
 	
-
+	// 메세지 전달
+	@Override
+	public void sendChatMessage(MessageDTO messageDTO) {
+		String sortedSetName = messageDTO.getRoomId();	// SORTED SET Name
+		String hashName = "CHAT_READ_POINT";		// HASH Name
+		String hahsKey = messageDTO.getRoomId()+"_"+messageDTO.getUserId();
+		Date date = new Date();	// 현재시각
+		String nowDate = milDateFormat.format(date);	// SORTED SET score, member, HASH의 value 에 사용
+		long score = Long.parseLong(nowDate); 
+		
+		RedisChatDTO redisParam = new RedisChatDTO(messageDTO);
+		redisParam.setNowDate(nowDate);				// 현재시간 설정
+		
+		// SORTED SET에 메세지 전송
+		redisTemplate.opsForZSet().add(sortedSetName, redisParam, score);
+		// HASH에 데이터 전송
+		redisTemplate.opsForHash().put(hashName, hahsKey, redisParam);
+		
+		rabbitTemplate.convertAndSend(CHAT_EXCHANGE, "chat.key."+sortedSetName, messageDTO.getMessage());
+	}
 }

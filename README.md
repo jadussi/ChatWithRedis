@@ -1,12 +1,26 @@
 # ChatWithRedis
+</br>
 
-###### Java 11
-###### Spring Boot 2.7.12
-###### Gradle 7.6
-###### My SQL
-###### Redis
+### Redis 자료구조 설계부터 구현, 테스트가 포함되어있습니다.
 
-# Redis 설계
+#### period : 2023.06.13 ~
+
+</br>
+</br>
+
+
+##### Java 11
+##### Spring Boot 2.7.12
+##### Gradle 7.6
+##### My SQL
+##### Redis
+
+</br>
+</br>
+</br>
+
+## Redis 설계
+</br>
 
 |  | 자료구조 | 자료구조 명 | KEY / MEMBER | VALUE / SCORE |
 | --- | --- | --- | --- | --- |
@@ -31,14 +45,17 @@
 
 </aside>
 
-# rabbit mq 설계
+## rabbit mq 설계
+</br>
 
-|  | 단체톡 | 개인톡 |
-| --- | --- | --- |
-| Queue | privateChat.queue | publicChat.queue |
-| Exchange | DiretctExchange | TopicExchange |
-| ExchangeName | privateChat.exchange | publicChat.exchange |
-| Routing Key | privateChat.key.* | publicChat.key* |
+|  | 채팅방 |
+| --- | --- |
+| Queue | chat.queue |
+| Exchange | TopicExchange |
+| ExchangeName | chat.exchange |
+| Routing Key | chat.key.* |
+
+</br>
 
 # Routing key
 
@@ -47,16 +64,20 @@
 - "#"
     - 여러개의 단어를 대체하는 와일드 카드
  
+</br>
+</br>
+</br>
 
 
-  
-      
-#
+# 테스트
 
-
+</br>
 
 #### 23.06.13 회원관련 컨트롤러 클래스 - 회원가입 서비스
+</br>
+
 [테스트]
+
 
 ![스크린샷 2023-06-14 212242](https://github.com/jadussi/ChatWithRedis/assets/136336510/3c8aac3d-f110-42c4-b8a5-6f5eadcab1cf)
 
@@ -65,9 +86,11 @@
 
 ![스크린샷 2023-06-14 212448](https://github.com/jadussi/ChatWithRedis/assets/136336510/a868be48-d306-4b34-9cc6-09e67fadab74)
 
-
+#
 
 #### 23.06.14 Redis 연동, Redis Connection 테스 컨트롤러 클래스 - 레디스 연결 테스트 서비스
+</br>
+
 [테스트]
 
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/c7d6c7e6-30de-46d3-9d61-15ec3fa5fb1e)
@@ -77,12 +100,19 @@
 
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/08ec5e2d-42c4-415e-9567-ea1376cbbec7)
 
+#
 
 #### 23.06.20 채팅방 전체 목록 조회 서비스, 채팅방 컨트롤러 클래스 - 채팅방 목록 조회 서비스
+</br>
+
 [결과]
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/7f7038aa-1c5b-4d46-a264-d4bc9da2e784)
 
+#
+
 #### 23.06.21 채팅방 개설 서비스 , 채팅방 컨트롤러 클래스 - 채팅방 개설 서비스
+</br>
+
 [테스트]
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/7db62780-560a-4ebd-a02a-abc6bb6b21d2)
 
@@ -93,8 +123,11 @@
    
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/5d9e280c-b370-4fbf-ad3d-810be9ba412f)
 
+#
 
 #### 23.06.24 기채팅방 다른 사용자 참여 서비스, 채팅방 컨트롤러 클래스 - 채팅방 참여 서비스
+</br>
+
 [테스트]
 1. 테스트 성공 조건
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/e5aef640-b96c-412e-8df8-29d700bc6559)
@@ -116,8 +149,11 @@
 
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/05b718ec-9cda-4e69-96b5-873695b0404b)
 
+#
 
 #### 23.07.02 채팅방 참여 서비스 Redis 에 데이터 추가
+</br>
+
 [테스트]
 ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/5375aa26-3d23-4b3f-97ac-bcf3e4e58223)
 
@@ -136,7 +172,28 @@
    
    ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/854adc86-9c63-4aee-b025-af0cea078552)
 
+#   
+
+#### 23.07.05 채팅방 메세지 전달 서비스, 채팅방 컨트롤러 클래스 - 채팅 메세지 전송 서비스
+</br>
+
+[테스트]
+   ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/57481438-611d-444b-9511-e12dd1d1ecbf)
+
+[결과]
+1. Swagger UI 테스트 결과
    
+   ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/9b22de07-d170-4069-8383-f2652285a928)
+
+2. Redis 데이터 추가 결과
+   
+   ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/219488f3-7fa2-423f-81a5-cb27ad86246c)
+
+3. RabbitMQ 메세지 큐 전달 결과
+   
+   ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/55f5ad8c-c93c-4433-b169-2fe16c527c5e)
+
+
 
 
 

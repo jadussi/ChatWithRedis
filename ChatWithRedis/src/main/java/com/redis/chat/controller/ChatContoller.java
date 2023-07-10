@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.redis.chat.dto.ChatDTO;
 import com.redis.chat.dto.MessageDTO;
+import com.redis.chat.dto.RedisChatDTO;
 import com.redis.chat.service.ChatService;
 
 import io.swagger.annotations.Api;
@@ -75,6 +76,17 @@ public class ChatContoller {
 			return ResponseEntity.status(HttpStatus.OK).body("메세지 전송에 성공하였습니다");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
+	
+	@ApiOperation(value = "채팅방 메세지 조회 서비스")
+	@GetMapping(value = "/message")
+	public @ResponseBody ResponseEntity<Object> getChatMessage(String roomId, String userId) {
+		try {
+			ArrayList<RedisChatDTO> rtn = chatService.getChatMessage(roomId, userId);
+			return ResponseEntity.status(HttpStatus.OK).body(rtn);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("메세지를 가져오는것을 실패하였습니다");
 		}
 	}
 }

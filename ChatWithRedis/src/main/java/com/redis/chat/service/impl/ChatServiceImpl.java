@@ -3,15 +3,19 @@ package com.redis.chat.service.impl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionStatus;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.redis.chat.dao.ChatDAO;
 import com.redis.chat.dto.ChatDTO;
 import com.redis.chat.dto.MessageDTO;
@@ -37,6 +41,7 @@ public class ChatServiceImpl implements ChatService {
 	
 	SimpleDateFormat  milDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");	// 밀리세컨드까지 포함
 	
+	String HASH_NAME = "CHAT_READ_POINT";
 	
 	/**
 	 * 채팅방목록조회
@@ -120,7 +125,6 @@ public class ChatServiceImpl implements ChatService {
 			// HASH value : {채팅내용, 보낸 사용자아이디, 채팅 보낸시각 등등}
 			
 			String sortedSetName = chatDTO.getRoomId();	// SORTED SET Name
-			String hashName = "CHAT_READ_POINT";		// HASH Name
 			String hahsKey = chatDTO.getRoomId()+"_"+chatDTO.getUserId();
 			Date date = new Date();	// 현재시각
 			String nowDate = milDateFormat.format(date);	// SORTED SET score, member, HASH의 value 에 사용
@@ -136,7 +140,7 @@ public class ChatServiceImpl implements ChatService {
 			// SORTED SET에 메세지 전송
 			redisTemplate.opsForZSet().add(sortedSetName, redisParam, score);
 			// HASH에 데이터 전송
-			redisTemplate.opsForHash().put(hashName, hahsKey, redisParam);
+			redisTemplate.opsForHash().put(HASH_NAME, hahsKey, redisParam);
 			
 			if(exCnt >= 2) {
 				transactionManager.commit(status);	// 두 개의 테이블이 변경이 되었을때 commit
@@ -154,7 +158,6 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public void sendChatMessage(MessageDTO messageDTO) {
 		String sortedSetName = messageDTO.getRoomId();	// SORTED SET Name
-		String hashName = "CHAT_READ_POINT";		// HASH Name
 		String hahsKey = messageDTO.getRoomId()+"_"+messageDTO.getUserId();
 		Date date = new Date();	// 현재시각
 		String nowDate = milDateFormat.format(date);	// SORTED SET score, member, HASH의 value 에 사용
@@ -166,8 +169,30 @@ public class ChatServiceImpl implements ChatService {
 		// SORTED SET에 메세지 전송
 		redisTemplate.opsForZSet().add(sortedSetName, redisParam, score);
 		// HASH에 데이터 전송
-		redisTemplate.opsForHash().put(hashName, hahsKey, redisParam);
+		redisTemplate.opsForHash().put(HASH_NAME, hahsKey, redisParam);
 		
 		rabbitTemplate.convertAndSend(CHAT_EXCHANGE, "chat.key."+sortedSetName, messageDTO.getMessage());
+	}
+	
+	// 채팅 메세지 조회
+	@Override
+	public ArrayList<RedisChatDTO> getChatMessage(String roomId, String userId) {
+		// HASH 에서 현재 위치 
+		String hashKey = roomId+"_"+userId;
+		long stIdx = redisTemplate.opsForZSet().rank(roomId, redisTemplate.opsForHash().get(HASH_NAME, hashKey));
+		if(stIdx < 0) stIdx = 0;	// 시작 index가 0보다 작으면 0으로 set
+		long endIdx = stIdx+2;		// 3개만 보여주기
+		
+		Set<TypedTuple<Object>> rtnSet = redisTemplate.opsForZSet().rangeWithScores(roomId, stIdx, endIdx);
+		
+		RedisChatDTO updateChatDTO = new RedisChatDTO();
+		ArrayList<RedisChatDTO> rtnArr = new ArrayList<>();
+		// 마지막 으로 가져온 위치로 HASH update
+		for(TypedTuple tt : rtnSet) {
+			updateChatDTO = (RedisChatDTO) tt.getValue();
+			rtnArr.add(updateChatDTO);
+		}
+		redisTemplate.opsForHash().put(HASH_NAME, hashKey, updateChatDTO);	// HASH update 하여 마지막 읽은 위치 수정
+		return rtnArr;
 	}
 }

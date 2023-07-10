@@ -12,9 +12,9 @@
 ##### Java 11
 ##### Spring Boot 2.7.12
 ##### Gradle 7.6
-##### My SQL
-##### Redis
-##### RabbitMQ
+##### My SQL 8.0.33
+##### Redis 3.0.504
+##### RabbitMQ 3.12.0
 
 </br>
 </br>

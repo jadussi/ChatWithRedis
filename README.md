@@ -3,7 +3,7 @@
 
 ### Redis 자료구조 설계부터 구현, 테스트가 포함되어있습니다.
 
-#### period : 2023.06.13 ~
+#### period : 2023.06.13 ~ 2023.07.10
 
 </br>
 </br>
@@ -194,6 +194,20 @@
    ![image](https://github.com/jadussi/ChatWithRedis/assets/136336510/55f5ad8c-c93c-4433-b169-2fe16c527c5e)
 
 
+#
+
+#### 23.07.10 채팅방 메세지 조회 서비스, 채팅방 컨트롤러 클래스 - 채팅 메세지 조회 서비스
+</br>
+
+[테스트]
+</br>
+
+   <img width="826" alt="image" src="https://github.com/jadussi/ChatWithRedis/assets/136336510/560c3f82-8a08-465f-9aa9-42aa0ed58909">
+
+[결과]
+</br>
+
+   <img width="839" alt="image" src="https://github.com/jadussi/ChatWithRedis/assets/136336510/bcfdaca0-e833-46bc-9aef-715c6a813134">
 
 
 

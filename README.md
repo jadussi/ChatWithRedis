@@ -14,6 +14,7 @@
 ##### Gradle 7.6
 ##### My SQL
 ##### Redis
+##### RabbitMQ
 
 </br>
 </br>

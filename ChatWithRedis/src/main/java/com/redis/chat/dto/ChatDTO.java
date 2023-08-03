@@ -7,22 +7,22 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(value = "Ã¤ÆÃ¹æ Á¤º¸", description = "Ã¤ÆÃ¹æ¾ÆÀÌµğ, Ã¤ÆÃ¹æ ÀÌ¸§, Ã¤ÆÃ¹æ Å¸ÀÔÀ» °¡Áø Data Transfer Object")
+@ApiModel(value = "ì±„íŒ…ë°© ì •ë³´", description = "ì±„íŒ…ë°©ì•„ì´ë””, ì±„íŒ…ë°© ì´ë¦„, ì±„íŒ…ë°© íƒ€ì…ì„ ê°€ì§„ Data Transfer Object")
 public class ChatDTO {
-	@ApiModelProperty(value = "Ã¤ÆÃ¹æ ¾ÆÀÌµğ")
+	@ApiModelProperty(value = "ì±„íŒ…ë°© ì•„ì´ë””")
 	private String roomId;
-	@ApiModelProperty(value = "Ã¤ÆÃ¹æ ÀÌ¸§")
+	@ApiModelProperty(value = "ì±„íŒ…ë°© ì´ë¦„")
 	private String roomName;
-	@ApiModelProperty(value = "Ã¤ÆÃ¹æ Å¸ÀÔ ±¸ºĞ¸í")
+	@ApiModelProperty(value = "ì±„íŒ…ë°© íƒ€ì… êµ¬ë¶„ëª…")
 	private String roomTypeNm;
-	@ApiModelProperty(value = "Ã¤ÆÃ¹æ Å¸ÀÔ ±¸ºĞ")
+	@ApiModelProperty(value = "ì±„íŒ…ë°© íƒ€ì… êµ¬ë¶„")
 	private String roomType;
-	@ApiModelProperty(value = "Ã¤ÆÃ¹æ Âü¿©ÀÚ ¾ÆÀÌµğ")
+	@ApiModelProperty(value = "ì±„íŒ…ë°© ì°¸ì—¬ì ì•„ì´ë””")
 	private String userId;
-	@ApiModelProperty(value = "Ã¤ÆÃ¹æ Âü¿©ÀÚ ¼ö")
+	@ApiModelProperty(value = "ì±„íŒ…ë°© ì°¸ì—¬ì ìˆ˜")
 	private String partiNum;
-	@ApiModelProperty(value = "ÇöÀç Âü¿©ÀÚ ¼ö")
+	@ApiModelProperty(value = "í˜„ì¬ ì°¸ì—¬ì ìˆ˜")
 	private String prePartiNum;
-	@ApiModelProperty(value = "Âü¿©°¡´É ¿©ºÎ")
+	@ApiModelProperty(value = "ì°¸ì—¬ê°€ëŠ¥ ì—¬ë¶€")
 	private String partiYn;
 }

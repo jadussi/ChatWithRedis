@@ -18,9 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class UserServiceImpl implements UserService {
 	
-	private final UserDAO userDAO;	// È¸¿ø°ü·Ã DAO °´Ã¼
+	private final UserDAO userDAO;	// íšŒì›ê´€ë ¨ DAO ê°ì²´
 	
-	/** È¸¿ø°¡ÀÔ ¼­ºñ½º
+	/** íšŒì›ê°€ì… ì„œë¹„ìŠ¤
 	 *
 	 */
 	@Override
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
-	/** ·Î±×ÀÎ ¼­ºñ½º
+	/** ë¡œê·¸ì¸ ì„œë¹„ìŠ¤
 	 *
 	 */
 	@Override

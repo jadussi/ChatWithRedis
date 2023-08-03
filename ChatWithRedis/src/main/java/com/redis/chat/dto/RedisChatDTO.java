@@ -10,14 +10,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(value = "Ã¤ÆÃ ³»¿ë", description = "Redis ¿¡ ÀúÀåÇÒ Ã¤ÆÃ¿¡ ´ëÇÑ ³»¿ëÀ» ´ãÀÀ Data Transfer Object")
+@ApiModel(value = "ì±„íŒ… ë‚´ìš©", description = "Redis ì— ì €ì¥í•  ì±„íŒ…ì— ëŒ€í•œ ë‚´ìš©ì„ ë‹´ì‘ Data Transfer Object")
 public class RedisChatDTO {
 	
-	@ApiModelProperty(value = "º¸³»´Â »ç¿ëÀÚ¾ÆÀÌµğ")
+	@ApiModelProperty(value = "ë³´ë‚´ëŠ” ì‚¬ìš©ìì•„ì´ë””")
 	private String userID;
-	@ApiModelProperty(value = "ÇöÀç½Ã°£")
+	@ApiModelProperty(value = "í˜„ì¬ì‹œê°„")
 	private String nowDate;
-	@ApiModelProperty(value = "Ã¤ÆÃ³»¿ë")
+	@ApiModelProperty(value = "ì±„íŒ…ë‚´ìš©")
 	private String message;
 	
 	public RedisChatDTO() {

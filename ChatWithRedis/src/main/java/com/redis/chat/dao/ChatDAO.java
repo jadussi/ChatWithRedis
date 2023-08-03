@@ -9,25 +9,25 @@ import com.redis.chat.dto.ChatDTO;
 @Mapper
 public interface ChatDAO {
 	
-	// Ã¤ÆÃ¹æ ¸ñ·Ï Á¶È¸
+	// ì±„íŒ…ë°© ëª©ë¡ ì¡°íšŒ
 	ArrayList<ChatDTO> selectChatRoomList();
 	
-	// Âü¿©ÁßÀÎ Ã¤ÆÃ¹æ ¸ñ·Ï Á¶È¸
+	// ì°¸ì—¬ì¤‘ì¸ ì±„íŒ…ë°© ëª©ë¡ ì¡°íšŒ
 	ArrayList<ChatDTO> selectUserChatRoomList(ChatDTO chatDTO);
 	
-	// Ã¤ÆÃ¹æ roomId ¸¸µé±â
+	// ì±„íŒ…ë°© roomId ë§Œë“¤ê¸°
 	String makeRoomId();
 	
-	// Ã¤ÆÃ¹æ °³¼³
+	// ì±„íŒ…ë°© ê°œì„¤
 	int makeChatRoom(ChatDTO chatDTO) throws Exception;
 	
-	// Ã¤ÆÃ¹æ Âü¿©ÀÚ Ãß°¡
+	// ì±„íŒ…ë°© ì°¸ì—¬ì ì¶”ê°€
 	int insertRommParti(ChatDTO chatDTO) throws Exception;
 	
-	// Ã¤ÆÃ¹æ Âü¿©°¡´É ¿©ºÎ È®ÀÎ
+	// ì±„íŒ…ë°© ì°¸ì—¬ê°€ëŠ¥ ì—¬ë¶€ í™•ì¸
 	ChatDTO selectChatRoomStatus(ChatDTO chatDTO);
 	
-	// Ã¤ÆÃ¹æ Âü¿©ÀÚ ¼ö º¯°æ
+	// ì±„íŒ…ë°© ì°¸ì—¬ì ìˆ˜ ë³€ê²½
 	int updateChatRoomParti(ChatDTO chatDTO) throws Exception;
 	
 }

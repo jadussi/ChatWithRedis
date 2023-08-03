@@ -5,9 +5,9 @@ import com.redis.chat.dto.LoginDTO;
 
 public interface UserService {
 	
-	// È¸¿ø°¡ÀÔ ¼­ºñ½º
+	// íšŒì›ê°€ì… ì„œë¹„ìŠ¤
 	void joinService(LoginDTO loginDTO);
 	
-	// ·Î±×ÀÎ ¼­ºñ½º
+	// ë¡œê·¸ì¸ ì„œë¹„ìŠ¤
 	String loginService(LoginDTO loginDTO);
 }

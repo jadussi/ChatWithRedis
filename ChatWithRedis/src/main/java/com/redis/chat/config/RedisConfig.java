@@ -11,8 +11,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 	
 	@Bean
-	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {	// redis Á÷·ÄÈ­°ü·Ã ¼³Á¤
-		// redis ÀÚ·á±¸Á¶¿¡ µû¸¥ Ãß°¡ Á÷·ÄÈ­ ¼³Á¤ ÇÊ¿ä ÇÒ ¼öµµ ÀÖÀ½
+	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {	// redis ì§ë ¬í™”ê´€ë ¨ ì„¤ì •
+		// redis ìë£Œêµ¬ì¡°ì— ë”°ë¥¸ ì¶”ê°€ ì§ë ¬í™” ì„¤ì • í•„ìš” í•  ìˆ˜ë„ ìˆìŒ
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());

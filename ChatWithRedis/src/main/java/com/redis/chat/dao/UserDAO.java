@@ -7,7 +7,7 @@ import com.redis.chat.dto.LoginDTO;
 @Mapper
 public interface UserDAO {
 	
-	// х╦©Ь╟║ют
+	// М ▄Л⌡░Й╟─Л·┘
 	int joinService(LoginDTO loginDTO);
 	
 	String loginService(LoginDTO loginDTO);

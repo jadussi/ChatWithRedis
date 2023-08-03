@@ -7,13 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(value = "È¸¿ø Á¤º¸", description = "»ç¿ëÀÚ ¾ÆÀÌµğ, ºñ¹Ğ¹øÈ£, ÀÌ¸§À» °¡Áø Data Transfer Object")
+@ApiModel(value = "íšŒì› ì •ë³´", description = "ì‚¬ìš©ì ì•„ì´ë””, ë¹„ë°€ë²ˆí˜¸, ì´ë¦„ì„ ê°€ì§„ Data Transfer Object")
 public class LoginDTO {
 	
-	@ApiModelProperty(value = "»ç¿ëÀÚ ¾ÆÀÌµğ")
+	@ApiModelProperty(value = "ì‚¬ìš©ì ì•„ì´ë””")
 	private String userId; 
-	@ApiModelProperty(value = "»ç¿ëÀÚ ºñ¹Ğ¹øÈ£")
+	@ApiModelProperty(value = "ì‚¬ìš©ì ë¹„ë°€ë²ˆí˜¸")
 	private String userPw;
-	@ApiModelProperty(value = "»ç¿ëÀÚ ÀÌ¸§")
+	@ApiModelProperty(value = "ì‚¬ìš©ì ì´ë¦„")
 	private String userNm;
 }

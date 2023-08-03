@@ -20,35 +20,35 @@ import com.rabbitmq.client.AMQP.Exchange;
 @Configuration
 public class RabbitConfig {
 	
-	// Åå °ü·Ã Àü¿ªº¯¼ö ¼±¾ğ (°³ÀÎÅå, ´ÜÅå ±¸ºĞ ÇÊ¿ä X)
+	// í†¡ ê´€ë ¨ ì „ì—­ë³€ìˆ˜ ì„ ì–¸ (ê°œì¸í†¡, ë‹¨í†¡ êµ¬ë¶„ í•„ìš” X)
 	private String CHAT_QUEUE = "chat.queue";
 	private String CHAT_EXCHANGE = "chat.exchange";
 	private String CHAT_KEY = "chat.key.*";
 	
-	@Bean	// Ã¤ÆÃ¹æ Å¥ »ı¼º
+	@Bean	// ì±„íŒ…ë°© í ìƒì„±
 	public Queue chatQueue() {
 		return new Queue(CHAT_QUEUE);
 	}
 	
-	@Bean	// Ã¤ÆÃ¹æ Topic ¹æ½Ä Exchange »ı¼º
+	@Bean	// ì±„íŒ…ë°© Topic ë°©ì‹ Exchange ìƒì„±
 	public TopicExchange chatExchange() {
 		return new TopicExchange(CHAT_EXCHANGE);
 	}
 	
-	@Bean	// Queue, exchange ¹ÙÀÎµù
+	@Bean	// Queue, exchange ë°”ì¸ë”©
 	public Binding chatBinding(@Qualifier("chatQueue") Queue queue, @Qualifier("chatExchange") TopicExchange exchange) {
 		return BindingBuilder.bind(queue).to(exchange).with(CHAT_KEY);
 	}
 	
 	@Bean
     public MessageConverter messageConverter() {	
-        return new Jackson2JsonMessageConverter();	// jsonÇü½ÄÀÇ messageConverter ¼³Á¤
+        return new Jackson2JsonMessageConverter();	// jsoní˜•ì‹ì˜ messageConverter ì„¤ì •
     }
 	
 	@Bean
 	public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
 		RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-		rabbitTemplate.setMessageConverter(messageConverter());	//object¿¡ ´ãÀ» message rabbitmqÀÇ ¸Ş¼¼Áö Çü½ÄÀ¸·Î º¯È¯
+		rabbitTemplate.setMessageConverter(messageConverter());	//objectì— ë‹´ì„ message rabbitmqì˜ ë©”ì„¸ì§€ í˜•ì‹ìœ¼ë¡œ ë³€í™˜
 		return rabbitTemplate;
 	}
 }

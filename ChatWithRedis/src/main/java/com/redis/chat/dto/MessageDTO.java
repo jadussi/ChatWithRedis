@@ -7,14 +7,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(value = "Ã¤ÆÃ ¸Ş¼¼Áö Àü¼Û¿¡ ÇÊ¿äÇÑ Data Transfer Object")
+@ApiModel(value = "ì±„íŒ… ë©”ì„¸ì§€ ì „ì†¡ì— í•„ìš”í•œ Data Transfer Object")
 public class MessageDTO {
 	
-	@ApiModelProperty(value = "Ã¤ÆÃ¹æ ¾ÆÀÌµğ")
+	@ApiModelProperty(value = "ì±„íŒ…ë°© ì•„ì´ë””")
 	private String roomId;
-	@ApiModelProperty(value = "¸Ş¼¼Áö")
+	@ApiModelProperty(value = "ë©”ì„¸ì§€")
 	private String message;
-	@ApiModelProperty(value = "º¸³»´Â »ç¿ëÀÚ ¾ÆÀÌµğ")
+	@ApiModelProperty(value = "ë³´ë‚´ëŠ” ì‚¬ìš©ì ì•„ì´ë””")
 	private String userId;
 	
 }

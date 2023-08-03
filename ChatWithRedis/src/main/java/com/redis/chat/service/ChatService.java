@@ -10,21 +10,21 @@ import com.redis.chat.dto.MessageDTO;
 import com.redis.chat.dto.RedisChatDTO;
 
 public interface ChatService {
-	// Ã¤ÆÃ¹æ ¸ñ·Ï Á¶È¸
+	// ì±„íŒ…ë°© ëª©ë¡ ì¡°íšŒ
 	ArrayList<ChatDTO> selectChatRoomList();
 	
-	// Âü¿©ÁßÀÎ Ã¤ÆÃ¹æ ¸ñ·Ï Á¶È¸
+	// ì°¸ì—¬ì¤‘ì¸ ì±„íŒ…ë°© ëª©ë¡ ì¡°íšŒ
 	ArrayList<ChatDTO> selectUserChatRoomList(ChatDTO chatDTO);
 	
-	// Ã¤ÆÃ¹æ °³¼³
+	// ì±„íŒ…ë°© ê°œì„¤
 	void makeChatRoom(ChatDTO chatDTO) throws Exception;
 	
-	// Ã¤ÆÃ¹æ Âü¿©ÀÚ Ãß°¡
+	// ì±„íŒ…ë°© ì°¸ì—¬ì ì¶”ê°€
 	void joinChatRoom(ChatDTO chatDTO, String userNm) throws Exception;
 	
-	// Ã¤ÆÃ ¸Ş¼¼Áö Àü¼Û
+	// ì±„íŒ… ë©”ì„¸ì§€ ì „ì†¡
 	void sendChatMessage(MessageDTO messageDTO);
 	
-	// Ã¤ÆÃ ¸Ş¼¼Áö Á¶È¸
+	// ì±„íŒ… ë©”ì„¸ì§€ ì¡°íšŒ
 	ArrayList<RedisChatDTO> getChatMessage(String roomId, String userId);
 }

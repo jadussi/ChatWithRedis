@@ -14,16 +14,16 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@Api(tags = "Redis Connection Å×½ºÆ® ÄÁÆ®·Ñ·¯ Å¬·¡½º")
+@Api(tags = "Redis Connection í…ŒìŠ¤íŠ¸ ì»¨íŠ¸ë¡¤ëŸ¬ í´ë˜ìŠ¤")
 @RequestMapping("/redis")
 public class RedisConnectionConroller {
 	
 	private final RedisTemplate<String, Object> redisTemplate;
 	
 	
-	@ApiOperation(value = "·¹µğ½º ¿¬°á Å×½ºÆ®")
+	@ApiOperation(value = "ë ˆë””ìŠ¤ ì—°ê²° í…ŒìŠ¤íŠ¸")
 	@GetMapping("/test/{param}")
-	public String getConnection(@ApiParam(value = "String ÀÚ·á±¸Á¶ ÆÄ¶ó¸ŞÅÍ") @RequestBody String param) {
+	public String getConnection(@ApiParam(value = "String ìë£Œêµ¬ì¡° íŒŒë¼ë©”í„°") @RequestBody String param) {
 		
 		redisTemplate.opsForValue().append("testConnection", param);
 		

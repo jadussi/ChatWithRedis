@@ -19,7 +19,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30) // open api spec 3.0
         		.apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.redis.chat.controller"))	// basic-error-controller Ç¥½Ã ¾ÈÇÏ±â À§ÇØ controller ÆĞÅ°Áö °æ·Î ÁöÁ¤
+                .apis(RequestHandlerSelectors.basePackage("com.redis.chat.controller"))	// basic-error-controller í‘œì‹œ ì•ˆí•˜ê¸° ìœ„í•´ controller íŒ¨í‚¤ì§€ ê²½ë¡œ ì§€ì •
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -27,7 +27,7 @@ public class SwaggerConfig {
 	public ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("ChatWithRedis API Documentation")
-                .description("ChatWithRedis api ¹®¼­.")
+                .description("ChatWithRedis api ë¬¸ì„œ.")
                 .version("0.1")
                 .build();
     }
@@ -35,7 +35,7 @@ public class SwaggerConfig {
 	@Bean
 	public InternalResourceViewResolver defaultViewResolver() {
 	    return new InternalResourceViewResolver();
-	    // ¸®¾×Æ® ¿¬µ¿ ÈÄ Swagger ¹®¼­ ¸®´ÙÀÌ·ºÆ®½Ã redirect:/swagger-ui/index.html¶ó´Â ¼­ºí¸´ÀÌ Á¸ÀçÇÏÁö ¾Ê¾Æ Ãß°¡
+	    // ë¦¬ì•¡íŠ¸ ì—°ë™ í›„ Swagger ë¬¸ì„œ ë¦¬ë‹¤ì´ë ‰íŠ¸ì‹œ redirect:/swagger-ui/index.htmlë¼ëŠ” ì„œë¸”ë¦¿ì´ ì¡´ì¬í•˜ì§€ ì•Šì•„ ì¶”ê°€
 	}
 
 }

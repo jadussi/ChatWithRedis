@@ -18,22 +18,22 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@Api(tags = "È¸¿ø°ü·Ã ÄÁÆ®·Ñ·¯ Å¬·¡½º")
+@Api(tags = "íšŒì›ê´€ë ¨ ì»¨íŠ¸ë¡¤ëŸ¬ í´ë˜ìŠ¤")
 @RequestMapping("/user")
 public class UserController {
 	
-	// È¸¿ø°ü·Ã ¼­ºñ½º °´Ã¼
+	// íšŒì›ê´€ë ¨ ì„œë¹„ìŠ¤ ê°ì²´
 	private final UserService userService;
 	
-	@ApiOperation(value = "È¸¿ø°¡ÀÔ ¼­ºñ½º")
+	@ApiOperation(value = "íšŒì›ê°€ì… ì„œë¹„ìŠ¤")
 	@PostMapping("/join")
 	public String joinService(@RequestBody LoginDTO loginDTO) throws Exception {
 		userService.joinService(loginDTO);
-		log.info("È¸¿ø°¡ÀÔ ¿Ï·á");
+		log.info("íšŒì›ê°€ì… ì™„ë£Œ");
 		return null;
 	}
 	
-	@ApiOperation(value = "·Î±×ÀÎ ¼­ºñ½º")
+	@ApiOperation(value = "ë¡œê·¸ì¸ ì„œë¹„ìŠ¤")
 	@GetMapping("/login/{userId}/{userPw}")
 	public String loginService(LoginDTO loginDTO) {
 		return userService.loginService(loginDTO);

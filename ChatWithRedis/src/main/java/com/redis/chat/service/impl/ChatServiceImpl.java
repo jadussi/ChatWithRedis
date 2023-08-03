@@ -32,19 +32,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
 	
-	private final ChatDAO chatDAO;	// Ã¤ÆÃ¹æ °ü·Ã DAO °´Ã¼
+	private final ChatDAO chatDAO;	// ì±„íŒ…ë°© ê´€ë ¨ DAO ê°ì²´
 	
-	private final PlatformTransactionManager transactionManager;	// Æ®·£Àè¼Ç °ü¸® °´Ã¼
+	private final PlatformTransactionManager transactionManager;	// íŠ¸ëœì­ì…˜ ê´€ë¦¬ ê°ì²´
 	private final RedisTemplate<String, Object> redisTemplate;		// redisTemplate
 	private final RabbitTemplate rabbitTemplate;					// rabbitTemplate
 	private String CHAT_EXCHANGE = "chat.exchange";
 	
-	SimpleDateFormat  milDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");	// ¹Ğ¸®¼¼ÄÁµå±îÁö Æ÷ÇÔ
+	SimpleDateFormat  milDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");	// ë°€ë¦¬ì„¸ì»¨ë“œê¹Œì§€ í¬í•¨
 	
 	String HASH_NAME = "CHAT_READ_POINT";
 	
 	/**
-	 * Ã¤ÆÃ¹æ¸ñ·ÏÁ¶È¸
+	 * ì±„íŒ…ë°©ëª©ë¡ì¡°íšŒ
 	 */
 	@Override
 	public ArrayList<ChatDTO> selectChatRoomList() {
@@ -56,7 +56,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	/**
-	 * Âü¿©ÁßÀÎ Ã¤ÆÃ¹æ ¸ñ·Ï Á¶È¸
+	 * ì°¸ì—¬ì¤‘ì¸ ì±„íŒ…ë°© ëª©ë¡ ì¡°íšŒ
 	 */
 	
 	@Override
@@ -66,133 +66,133 @@ public class ChatServiceImpl implements ChatService {
 	}
 	
 	/**
-	 * Ã¤ÆÃ¹æ °³¼³ ¼­ºñ½º
+	 * ì±„íŒ…ë°© ê°œì„¤ ì„œë¹„ìŠ¤
 	 */
 	@Override
 	public void makeChatRoom(ChatDTO chatDTO) throws Exception {
-		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());	// Æ®·£Àè¼Ç ¼º°ø
-		int excnt = 0;	//insert °Ç¼ö
+		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());	// íŠ¸ëœì­ì…˜ ì„±ê³µ
+		int excnt = 0;	//insert ê±´ìˆ˜
 		try {
-			String roomId = chatDAO.makeRoomId();	// Ã¤ÆÃ¹æ ¾ÆÀÌµğ¸¦ ¸¸µé¾î¼­ Ã¤ÆÃ¹æ °³¼³ À» À§ÇØ »ç¿ë(2°³ÀÇ Å×ÀÌºí¿¡¼­ »ç¿ë)
+			String roomId = chatDAO.makeRoomId();	// ì±„íŒ…ë°© ì•„ì´ë””ë¥¼ ë§Œë“¤ì–´ì„œ ì±„íŒ…ë°© ê°œì„¤ ì„ ìœ„í•´ ì‚¬ìš©(2ê°œì˜ í…Œì´ë¸”ì—ì„œ ì‚¬ìš©)
 			chatDTO.setRoomId(roomId);
 			excnt += chatDAO.makeChatRoom(chatDTO);
 			excnt += chatDAO.insertRommParti(chatDTO);
 			if(excnt >= 2) {
-				transactionManager.commit(status);	// Ã¤ÆÃ¹æ °³¼³ ½Ã commit
+				transactionManager.commit(status);	// ì±„íŒ…ë°© ê°œì„¤ ì‹œ commit
 			} else {
-				throw new Exception();	// µÎ°³ÀÇ Å×ÀÌºí¿¡ insert ÇÏÁö¸¸ µÎ°³°¡ ÀüºÎ ´Ù º¯ÇÏÁö ¾Ê¾ÒÀ» ¶§ ¿¹¿Ü »óÈ²ÀÌ ¹ß»ı ÇÑ°ÍÀ¸·Î °£ÁÖ
+				throw new Exception();	// ë‘ê°œì˜ í…Œì´ë¸”ì— insert í•˜ì§€ë§Œ ë‘ê°œê°€ ì „ë¶€ ë‹¤ ë³€í•˜ì§€ ì•Šì•˜ì„ ë•Œ ì˜ˆì™¸ ìƒí™©ì´ ë°œìƒ í•œê²ƒìœ¼ë¡œ ê°„ì£¼
 			}
 		} catch (Exception e) {
 			transactionManager.rollback(status);
-			throw new Exception("Ã¤ÆÃ¹æ °³¼³¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù");	// Ã¤ÆÃ¹æ °³¼³ ½ÇÆĞ ½Ã rollback
+			throw new Exception("ì±„íŒ…ë°© ê°œì„¤ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤");	// ì±„íŒ…ë°© ê°œì„¤ ì‹¤íŒ¨ ì‹œ rollback
 		}
 		
 	}
 
 	/**
-	 * Ã¤ÆÃ¹æ Âü¿© ¼­ºñ½º
+	 * ì±„íŒ…ë°© ì°¸ì—¬ ì„œë¹„ìŠ¤
 	 */
 	@Override
 	public void joinChatRoom(ChatDTO chatDTO, String userNm) throws Exception {
 		TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-		int exCnt = 0;	// insert, update °Ç¼ö
+		int exCnt = 0;	// insert, update ê±´ìˆ˜
 		try {
-			// Ã¤ÆÃ¹æ Âü¿©ÇÏ±â Àü Âü¿©ÇÏ°íÀÚ ÇÏ´Â Ã¤ÆÃ¹æ Ã¤ÆÃÂü¿©¿©ºÎ ´Ù½Ã È®ÀÎ ÈÄ Ã¤ÆÃ¹æ Âü¿©ÀÚ ¼ö º¯°æ ¹× Ã¤ÆÃ¹æ ÀÎ¿ø Å×ÀÌºí insert
-			ChatDTO checkDTO =  chatDAO.selectChatRoomStatus(chatDTO);	// Âü¿©ÇÏ°íÀÚ ÇÏ´Â Ã¤ÆÃ¹æ Âü¿©¿©ºÎ »óÅÂ È®ÀÎ
+			// ì±„íŒ…ë°© ì°¸ì—¬í•˜ê¸° ì „ ì°¸ì—¬í•˜ê³ ì í•˜ëŠ” ì±„íŒ…ë°© ì±„íŒ…ì°¸ì—¬ì—¬ë¶€ ë‹¤ì‹œ í™•ì¸ í›„ ì±„íŒ…ë°© ì°¸ì—¬ì ìˆ˜ ë³€ê²½ ë° ì±„íŒ…ë°© ì¸ì› í…Œì´ë¸” insert
+			ChatDTO checkDTO =  chatDAO.selectChatRoomStatus(chatDTO);	// ì°¸ì—¬í•˜ê³ ì í•˜ëŠ” ì±„íŒ…ë°© ì°¸ì—¬ì—¬ë¶€ ìƒíƒœ í™•ì¸
 			
-			if(checkDTO.getPartiYn().equals("N")) {	// Ã¤ÆÃ¹æ Âü¿© °¡´É¿©ºÎ°¡ NÀÏ¶§ Âü¿© ºÒ°¡
-				throw new Exception("Âü¿© ÇÒ ¼ö ¾ø´Â Ã¤ÆÃ¹æ ÀÔ´Ï´Ù.");
+			if(checkDTO.getPartiYn().equals("N")) {	// ì±„íŒ…ë°© ì°¸ì—¬ ê°€ëŠ¥ì—¬ë¶€ê°€ Nì¼ë•Œ ì°¸ì—¬ ë¶ˆê°€
+				throw new Exception("ì°¸ì—¬ í•  ìˆ˜ ì—†ëŠ” ì±„íŒ…ë°© ì…ë‹ˆë‹¤.");
 			}
 			if(checkDTO.getPartiYn().equals("Y") &&
 					(Integer.parseInt(checkDTO.getPrePartiNum())+1 == Integer.parseInt(checkDTO.getPartiNum()))) {
 				checkDTO.setPartiYn("N");
 			}
-			checkDTO.setUserId(chatDTO.getUserId());	// »ç¿ëÀÚ Id set
+			checkDTO.setUserId(chatDTO.getUserId());	// ì‚¬ìš©ì Id set
 			
-			exCnt += chatDAO.updateChatRoomParti(checkDTO);	// Ã¤ÆÃ¹æ Âü¿©ÀÚ ¼ö º¯°æ
-			exCnt += chatDAO.insertRommParti(checkDTO);		// Ã¤ÆÃ¹æ Âü¿©ÀÚ Ãß°¡
+			exCnt += chatDAO.updateChatRoomParti(checkDTO);	// ì±„íŒ…ë°© ì°¸ì—¬ì ìˆ˜ ë³€ê²½
+			exCnt += chatDAO.insertRommParti(checkDTO);		// ì±„íŒ…ë°© ì°¸ì—¬ì ì¶”ê°€
 			
-			// SORTED SET : ´ëÈ­³»¿ëµéÀ» ´ã´Â°÷
-			// HASH : ¸¶Áö¸· ÀĞÀº À§Ä¡¸¦ Ç¥½ÃÇÏ´Â°÷
+			// SORTED SET : ëŒ€í™”ë‚´ìš©ë“¤ì„ ë‹´ëŠ”ê³³
+			// HASH : ë§ˆì§€ë§‰ ì½ì€ ìœ„ì¹˜ë¥¼ í‘œì‹œí•˜ëŠ”ê³³
 			
 			// SORTED SET Name : roomId
-			// SORTED SET socre : Âü¿© ½Ã°¢
-			// SORTED SET member : {Ã¤ÆÃ³»¿ë, º¸³½ »ç¿ëÀÚ¾ÆÀÌµğ, Ã¤ÆÃ º¸³½½Ã°¢ µîµî}
-			// Ã¤ÆÃ³»¿ë : ´©±¸´©±¸´ÔÀÌ Ã¤ÆÃ¿¡ Âü¿©ÇÏ¼Ì½À´Ï´Ù.(È­¸é¿¡¼­ »ç¿ëÀÚ ÀÌ¸§ ¹Ş¾Æ¿Í¾ßÇÔ)
+			// SORTED SET socre : ì°¸ì—¬ ì‹œê°
+			// SORTED SET member : {ì±„íŒ…ë‚´ìš©, ë³´ë‚¸ ì‚¬ìš©ìì•„ì´ë””, ì±„íŒ… ë³´ë‚¸ì‹œê° ë“±ë“±}
+			// ì±„íŒ…ë‚´ìš© : ëˆ„êµ¬ëˆ„êµ¬ë‹˜ì´ ì±„íŒ…ì— ì°¸ì—¬í•˜ì…¨ìŠµë‹ˆë‹¤.(í™”ë©´ì—ì„œ ì‚¬ìš©ì ì´ë¦„ ë°›ì•„ì™€ì•¼í•¨)
 			
 			// HASH Name : CHAT_READ_POINT
-			// HASH key : Ã¤ÆÃ¹æId_»ç¿ëÀÚ¾ÆÀÌµğ
-			// HASH value : {Ã¤ÆÃ³»¿ë, º¸³½ »ç¿ëÀÚ¾ÆÀÌµğ, Ã¤ÆÃ º¸³½½Ã°¢ µîµî}
+			// HASH key : ì±„íŒ…ë°©Id_ì‚¬ìš©ìì•„ì´ë””
+			// HASH value : {ì±„íŒ…ë‚´ìš©, ë³´ë‚¸ ì‚¬ìš©ìì•„ì´ë””, ì±„íŒ… ë³´ë‚¸ì‹œê° ë“±ë“±}
 			
 			String sortedSetName = chatDTO.getRoomId();	// SORTED SET Name
 			String hahsKey = chatDTO.getRoomId()+"_"+chatDTO.getUserId();
-			Date date = new Date();	// ÇöÀç½Ã°¢
-			String nowDate = milDateFormat.format(date);	// SORTED SET score, member, HASHÀÇ value ¿¡ »ç¿ë
+			Date date = new Date();	// í˜„ì¬ì‹œê°
+			String nowDate = milDateFormat.format(date);	// SORTED SET score, member, HASHì˜ value ì— ì‚¬ìš©
 			long score = Long.parseLong(nowDate); 
-			String message = userNm+"´ÔÀÌ Âü¿© ÇÏ¼Ì½À´Ï´Ù.";
+			String message = userNm+"ë‹˜ì´ ì°¸ì—¬ í•˜ì…¨ìŠµë‹ˆë‹¤.";
 			
-			// Redis¿¡ Àü´ŞÇÒ ÆÄ¶ó¸ŞÅÍ ¼³Á¤
+			// Redisì— ì „ë‹¬í•  íŒŒë¼ë©”í„° ì„¤ì •
 			RedisChatDTO redisParam = new RedisChatDTO();
-			redisParam.setUserID(chatDTO.getUserId());	// »ç¿ëÀÚ ¾ÆÀÌµğ ¼³Á¤
-			redisParam.setNowDate(nowDate);				// ÇöÀç½Ã°£ ¼³Á¤
+			redisParam.setUserID(chatDTO.getUserId());	// ì‚¬ìš©ì ì•„ì´ë”” ì„¤ì •
+			redisParam.setNowDate(nowDate);				// í˜„ì¬ì‹œê°„ ì„¤ì •
 			redisParam.setMessage(message);
 			
-			// SORTED SET¿¡ ¸Ş¼¼Áö Àü¼Û
+			// SORTED SETì— ë©”ì„¸ì§€ ì „ì†¡
 			redisTemplate.opsForZSet().add(sortedSetName, redisParam, score);
-			// HASH¿¡ µ¥ÀÌÅÍ Àü¼Û
+			// HASHì— ë°ì´í„° ì „ì†¡
 			redisTemplate.opsForHash().put(HASH_NAME, hahsKey, redisParam);
 			
 			if(exCnt >= 2) {
-				transactionManager.commit(status);	// µÎ °³ÀÇ Å×ÀÌºíÀÌ º¯°æÀÌ µÇ¾úÀ»¶§ commit
+				transactionManager.commit(status);	// ë‘ ê°œì˜ í…Œì´ë¸”ì´ ë³€ê²½ì´ ë˜ì—ˆì„ë•Œ commit
 				rabbitTemplate.convertAndSend(CHAT_EXCHANGE, "chat.key."+sortedSetName, message);
 			} else {
 				throw new Exception();
 			}
 		} catch (Exception e) {
 			transactionManager.rollback(status);
-			throw new Exception(null == e.getMessage() ? "Ã¤ÆÃ¹æ Âü¿©¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù." : e.getMessage());
+			throw new Exception(null == e.getMessage() ? "ì±„íŒ…ë°© ì°¸ì—¬ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤." : e.getMessage());
 		}
 	}
 	
-	// ¸Ş¼¼Áö Àü´Ş
+	// ë©”ì„¸ì§€ ì „ë‹¬
 	@Override
 	public void sendChatMessage(MessageDTO messageDTO) {
 		String sortedSetName = messageDTO.getRoomId();	// SORTED SET Name
 		String hahsKey = messageDTO.getRoomId()+"_"+messageDTO.getUserId();
-		Date date = new Date();	// ÇöÀç½Ã°¢
-		String nowDate = milDateFormat.format(date);	// SORTED SET score, member, HASHÀÇ value ¿¡ »ç¿ë
+		Date date = new Date();	// í˜„ì¬ì‹œê°
+		String nowDate = milDateFormat.format(date);	// SORTED SET score, member, HASHì˜ value ì— ì‚¬ìš©
 		long score = Long.parseLong(nowDate); 
 		
 		RedisChatDTO redisParam = new RedisChatDTO(messageDTO);
-		redisParam.setNowDate(nowDate);				// ÇöÀç½Ã°£ ¼³Á¤
+		redisParam.setNowDate(nowDate);				// í˜„ì¬ì‹œê°„ ì„¤ì •
 		
-		// SORTED SET¿¡ ¸Ş¼¼Áö Àü¼Û
+		// SORTED SETì— ë©”ì„¸ì§€ ì „ì†¡
 		redisTemplate.opsForZSet().add(sortedSetName, redisParam, score);
-		// HASH¿¡ µ¥ÀÌÅÍ Àü¼Û
+		// HASHì— ë°ì´í„° ì „ì†¡
 		redisTemplate.opsForHash().put(HASH_NAME, hahsKey, redisParam);
 		
 		rabbitTemplate.convertAndSend(CHAT_EXCHANGE, "chat.key."+sortedSetName, messageDTO.getMessage());
 	}
 	
-	// Ã¤ÆÃ ¸Ş¼¼Áö Á¶È¸
+	// ì±„íŒ… ë©”ì„¸ì§€ ì¡°íšŒ
 	@Override
 	public ArrayList<RedisChatDTO> getChatMessage(String roomId, String userId) {
-		// HASH ¿¡¼­ ÇöÀç À§Ä¡ 
+		// HASH ì—ì„œ í˜„ì¬ ìœ„ì¹˜ 
 		String hashKey = roomId+"_"+userId;
 		long stIdx = redisTemplate.opsForZSet().rank(roomId, redisTemplate.opsForHash().get(HASH_NAME, hashKey));
-		if(stIdx < 0) stIdx = 0;	// ½ÃÀÛ index°¡ 0º¸´Ù ÀÛÀ¸¸é 0À¸·Î set
-		long endIdx = stIdx+2;		// 3°³¸¸ º¸¿©ÁÖ±â
+		if(stIdx < 0) stIdx = 0;	// ì‹œì‘ indexê°€ 0ë³´ë‹¤ ì‘ìœ¼ë©´ 0ìœ¼ë¡œ set
+		long endIdx = stIdx+2;		// 3ê°œë§Œ ë³´ì—¬ì£¼ê¸°
 		
 		Set<TypedTuple<Object>> rtnSet = redisTemplate.opsForZSet().rangeWithScores(roomId, stIdx, endIdx);
 		
 		RedisChatDTO updateChatDTO = new RedisChatDTO();
 		ArrayList<RedisChatDTO> rtnArr = new ArrayList<>();
-		// ¸¶Áö¸· À¸·Î °¡Á®¿Â À§Ä¡·Î HASH update
+		// ë§ˆì§€ë§‰ ìœ¼ë¡œ ê°€ì ¸ì˜¨ ìœ„ì¹˜ë¡œ HASH update
 		for(TypedTuple tt : rtnSet) {
 			updateChatDTO = (RedisChatDTO) tt.getValue();
 			rtnArr.add(updateChatDTO);
 		}
-		redisTemplate.opsForHash().put(HASH_NAME, hashKey, updateChatDTO);	// HASH update ÇÏ¿© ¸¶Áö¸· ÀĞÀº À§Ä¡ ¼öÁ¤
+		redisTemplate.opsForHash().put(HASH_NAME, hashKey, updateChatDTO);	// HASH update í•˜ì—¬ ë§ˆì§€ë§‰ ì½ì€ ìœ„ì¹˜ ìˆ˜ì •
 		return rtnArr;
 	}
 }

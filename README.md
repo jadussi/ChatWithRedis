@@ -56,15 +56,7 @@
 | ExchangeName | chat.exchange |
 | Routing Key | chat.key.* |
 
-</br>
-
-# Routing key
-
-- "*"
-    - 하나의 단어만 대체하는 와일드 카드
-- "#"
-    - 여러개의 단어를 대체하는 와일드 카드
- 
+</br> 
 </br>
 </br>
 </br>
